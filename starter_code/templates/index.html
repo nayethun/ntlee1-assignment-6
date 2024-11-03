@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Linear Regression Assumptions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+    <h1>Interactive Linear Regression Assumptions</h1>
+    
+    <!-- Form for user inputs -->
+    <form method="post">
+        <label for="N">Sample Size (N):</label>
+        <input type="number" id="N" name="N" required><br><br>
+
+        <label for="mu">Mean (μ):</label>
+        <input type="number" id="mu" name="mu" step="any" required><br><br>
+
+        <label for="sigma2">Variance (σ²):</label>
+        <input type="number" id="sigma2" name="sigma2" step="any" required><br><br>
+
+        <label for="S">Number of Simulations (S):</label>
+        <input type="number" id="S" name="S" required><br><br>
+
+        <button id="generate-button" type="submit">Generate</button>
+    </form>
+
+    <!-- Results Section -->
+    <div id="results">
+        {% if plot1 and plot2 %}
+            <h2>Generated Plot</h2>
+            <h3>Scatter Plot with Regression Line</h3>
+            <!-- Display the scatter plot with regression line -->
+            <img src="data:image/png;base64,{{ plot1 }}" alt="Regression Plot">
+
+            <h3>Histogram of Slopes and Intercepts</h3>
+            <!-- Display the histogram of slopes and intercepts -->
+            <img src="data:image/png;base64,{{ plot2 }}" alt="Histograms">
+
+            <!-- Display proportions of more extreme slopes and intercepts -->
+            <p>Proportion of slopes more extreme than calculated slope: {{ slope_extreme }}</p>
+            <p>Proportion of intercepts more extreme than calculated intercept: {{ intercept_extreme }}</p>
+        {% else %}
+            <p>No plots to display. Please fill in the form and click Generate.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
